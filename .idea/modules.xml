@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/cheTestDemo.iml" filepath="$PROJECT_DIR$/cheTestDemo.iml" />
       <module fileurl="file://$PROJECT_DIR$/score/score.iml" filepath="$PROJECT_DIR$/score/score.iml" />
+      <module fileurl="file://$PROJECT_DIR$/timechoose/timechoose.iml" filepath="$PROJECT_DIR$/timechoose/timechoose.iml" />
       <module fileurl="file://$PROJECT_DIR$/video/video.iml" filepath="$PROJECT_DIR$/video/video.iml" />
     </modules>
   </component>
