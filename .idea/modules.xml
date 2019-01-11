@@ -2,8 +2,11 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/calender/calender.iml" filepath="$PROJECT_DIR$/calender/calender.iml" />
       <module fileurl="file://$PROJECT_DIR$/cheTestDemo.iml" filepath="$PROJECT_DIR$/cheTestDemo.iml" />
+      <module fileurl="file://$PROJECT_DIR$/custom/custom.iml" filepath="$PROJECT_DIR$/custom/custom.iml" />
       <module fileurl="file://$PROJECT_DIR$/score/score.iml" filepath="$PROJECT_DIR$/score/score.iml" />
+      <module fileurl="file://$PROJECT_DIR$/sideslip/sideslip.iml" filepath="$PROJECT_DIR$/sideslip/sideslip.iml" />
       <module fileurl="file://$PROJECT_DIR$/timechoose/timechoose.iml" filepath="$PROJECT_DIR$/timechoose/timechoose.iml" />
       <module fileurl="file://$PROJECT_DIR$/video/video.iml" filepath="$PROJECT_DIR$/video/video.iml" />
     </modules>

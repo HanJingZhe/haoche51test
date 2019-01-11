@@ -1,1 +1,1 @@
-include ':video', ':score', ':timechoose'
+include ':video', ':score', ':timechoose', ':calender', ':sideslip', ':custom'
