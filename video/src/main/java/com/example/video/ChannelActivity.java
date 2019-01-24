@@ -13,7 +13,6 @@ import java.util.List;
 /**
  * Created by Leon on 2017/4/6.
  */
-
 public class ChannelActivity extends AppCompatActivity {
 
     private static final String TAG = "ChannelActivity";

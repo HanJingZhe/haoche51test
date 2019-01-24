@@ -193,6 +193,14 @@ public class PartyRoomLayout extends ViewGroup {
             int childHeightMeasureSpec = MeasureSpec.makeMeasureSpec(size / 2, MeasureSpec.EXACTLY);
             child.measure(widthMeasureSpec, childHeightMeasureSpec);
         }
+
+        /*for (int i = 0; i < getChildCount(); i++) {
+            View child = getChildAt(i);
+            int size = MeasureSpec.getSize(widthMeasureSpec);
+            //孩子高度为父容器高度的一半
+            int childWidth = MeasureSpec.makeMeasureSpec(size / 2, MeasureSpec.EXACTLY);
+            child.measure(childWidth, heightMeasureSpec);
+        }*/
     }
 
     /**
