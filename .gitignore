@@ -33,3 +33,9 @@ freeline/
 freeline_project_description.json
 
 .DS_Store
+calender/libs/
+custom/libs/
+score/libs/
+sideslip/libs/
+testqiniu/libs/
+timechoose/libs/

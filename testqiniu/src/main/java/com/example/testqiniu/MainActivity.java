@@ -58,6 +58,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private Button fromCarame;
     private Button fromGarllary;
     private Button upload;
+    private Button btnMore;
 
 
     private Uri localUri = null;
@@ -74,7 +75,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         fromGarllary = (Button) findViewById(R.id.select_img);
         fromGarllary.setOnClickListener(this);
         upload = (Button) findViewById(R.id.upload_img);
+        btnMore = (Button) findViewById(R.id.btn_more);
         upload.setOnClickListener(this);
+        btnMore.setOnClickListener(this);
         methodRequiresTwoPermission();
     }
 
@@ -228,6 +231,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.upload_img:
                 uploadImg2QiNiu();
                 break;
+            case R.id.btn_more:
+                break;
         }
 
     }
@@ -236,11 +241,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         UploadManager uploadManager = new UploadManager();
         // 设置图片名字
         SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
-        String key = "icon_" + sdf.format(new Date());
+        //String key = "icon_" + sdf.format(new Date());
         String picPath = getOutputMediaFile().toString();
         Log.i(TAG, "picPath: " + picPath);
 
-        uploadManager.put(picPath, key, Auth.create(AccessKey, SecretKey).uploadToken("image"), new UpCompletionHandler() {
+        String key = "head";
+
+        uploadManager.put("wanljsalkdjflasjdlfkaj", null, Auth.create(AccessKey, SecretKey).uploadToken("image"), new UpCompletionHandler() {
             @Override
             public void complete(String key, ResponseInfo info, JSONObject res) {
                 // info.error中包含了错误信息，可打印调试
@@ -249,6 +256,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     Log.i(TAG, "token===" + Auth.create(AccessKey, SecretKey).uploadToken("photo"));
                     String headpicPath = "http://ot6991tvl.bkt.clouddn.com/" + key;
                     Log.i(TAG, "complete: " + headpicPath);
+                    Log.d(TAG, "complete: "+key);
                 }
                 //上传至阡陌链接
                 //     uploadpictoQianMo(headpicPath, picPath);

@@ -5,4 +5,5 @@ model{
     calender: GitHub上集成一个日历控件   1.5
     sideslip:  BaseQuickRecyclerView和EasySwipeMenuLayout列表侧滑删除  1.7
     custom:  自定义控件    1.11
+    testqiniu:  七牛上传图片
 }
