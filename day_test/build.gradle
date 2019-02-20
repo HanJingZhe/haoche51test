@@ -1,0 +1,71 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 28
+
+
+
+    defaultConfig {
+        applicationId "com.example.day_test"
+        minSdkVersion 15
+        targetSdkVersion 28
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+        ndk {
+            //根据需要 自行选择添加的对应cpu类型的.so库。
+            abiFilters 'armeabi', 'armeabi-v7a', 'arm64-v8a'
+            // 还可以添加 'x86', 'x86_64', 'mips', 'mips64'
+        }
+
+        manifestPlaceholders = [
+
+                XG_ACCESS_ID : "2100327018",
+                XG_ACCESS_KEY: "A7SXA47ES99Z",
+                HW_APPID     : "华为的APPID"
+        ]
+
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    implementation 'com.android.support:appcompat-v7:28.0.0'
+    implementation 'com.android.support.constraint:constraint-layout:1.1.3'
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'com.android.support.test:runner:1.0.2'
+    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+
+    implementation 'com.kyleduo.switchbutton:library:2.0.0'
+
+    implementation 'ch.ielse:switchbutton:1.0.1'
+
+    //信鸽普通版本jar，不包含厂商通道
+    implementation 'com.tencent.xinge:xinge:4.0.5-release'
+    //implementation'com.tencent.xinge:xinge:4.3.1-beta'
+    //jg包
+    implementation 'com.tencent.jg:jg:1.1'
+    //wup包
+    implementation 'com.tencent.wup:wup:1.0.0.E-release'
+    //mid包，minSdkVersion 14
+    implementation 'com.tencent.mid:mid:4.0.7-Release'
+
+    //增加以下依赖
+    implementation 'com.tencent.xinge:xinge:4.3.1-xgotherpush-beta'
+    implementation 'com.tencent.wup:wup:1.0.0.E-release'
+    implementation 'com.tencent.mid:mid:4.0.7-Release'
+    //需要集成fcm增加以下依赖并将google-services.json放进你应用model的根路径下:
+    implementation 'com.tencent.xinge:fcm:4.3.1-beta'
+    implementation 'com.google.firebase:firebase-messaging:17.3.1'
+}

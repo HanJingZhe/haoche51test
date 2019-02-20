@@ -1,1 +1,1 @@
-include ':video', ':score', ':timechoose', ':calender', ':sideslip', ':custom', ':testqiniu'
+include ':video', ':score', ':timechoose', ':calender', ':sideslip', ':custom', ':testqiniu', ':day_test'

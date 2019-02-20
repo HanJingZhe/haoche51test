@@ -6,4 +6,5 @@ model{
     sideslip:  BaseQuickRecyclerView和EasySwipeMenuLayout列表侧滑删除  1.7
     custom:  自定义控件    1.11
     testqiniu:  七牛上传图片
+    day_test: 日常测试function  腾讯信鸽test
 }
