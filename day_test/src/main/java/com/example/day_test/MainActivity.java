@@ -1,122 +1,275 @@
 package com.example.day_test;
 
-import android.support.v7.app.AppCompatActivity;
+import android.Manifest;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Toast;
 
-import com.tencent.android.tpush.XGLocalMessage;
-import com.tencent.android.tpush.XGPushClickedResult;
+import com.example.day_test.bean.AnimalBean;
+import com.example.day_test.bean.AnimalKindBean;
+import com.tbruyelle.rxpermissions2.RxPermissions;
 import com.tencent.android.tpush.XGPushConfig;
-import com.tencent.android.tpush.XGPushManager;
-import com.tencent.android.tpush.XGPushShowedResult;
 
-import java.util.HashMap;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.TimeUnit;
 
-public class MainActivity extends AppCompatActivity {
+import io.reactivex.Flowable;
+import io.reactivex.Observable;
+import io.reactivex.ObservableEmitter;
+import io.reactivex.ObservableOnSubscribe;
+import io.reactivex.ObservableSource;
+import io.reactivex.Observer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Consumer;
+import io.reactivex.functions.Function;
+import io.reactivex.functions.Predicate;
+import io.reactivex.schedulers.Schedulers;
+
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+
+    private static final String TAG = "王鹏";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Button btn = findViewById(R.id.main_btn);
-        btn.setOnClickListener(new View.OnClickListener() {
+        Button btnXg = findViewById(R.id.main_btn);
+        Button btnRx = findViewById(R.id.main_btn_rx);
+        View.OnClickListener l = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 pushMsg();
             }
+        };
+        btnXg.setOnClickListener(this);
+        btnRx.setOnClickListener(this);
+
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.main_btn:
+                pushMsg();//发送通知
+                break;
+            case R.id.main_btn_rx:
+                moduleRx();
+                break;
+        }
+    }
+
+    private void moduleRx() {
+        //testObservableCreate();
+        //testMap();
+        //testFlatMap();
+        //testInterval();
+        //testDistinct();
+        //testFilter();
+        //testBuffer();
+        //testTimer();
+        //testInterVal2();
+
+        testPermission();
+
+    }
+
+    private void testPermission() {
+        RxPermissions rxPermissions = new RxPermissions(this); // where this is an Activity or Fragment instance
+        rxPermissions
+                .request(Manifest.permission.CAMERA)
+                .subscribe(new Consumer<Boolean>() {
+                    @Override
+                    public void accept(Boolean aBoolean) throws Exception {
+
+                    }
+                });
+    }
+
+    private void testInterVal2() {
+        Flowable.interval(1, TimeUnit.SECONDS)
+                .subscribe(new Consumer<Long>() {
+                    @Override
+                    public void accept(Long aLong) throws Exception {
+                        Log.d(TAG, "accept: " + aLong);
+                    }
+                });
+    }
+
+    private void testTimer() {
+        Flowable.timer(1, TimeUnit.SECONDS)//延时一秒发送
+                .subscribe(new Consumer<Long>() {
+                    @Override
+                    public void accept(Long aLong) throws Exception {
+                        Log.d(TAG, "accept: " + aLong);
+                    }
+                });
+    }
+
+    private void testBuffer() {
+        Flowable.just(1, 2, 3, 4, 5, 6, 7, 8, 9)
+                .buffer(2, 3)
+                .subscribe(new Consumer<List<Integer>>() {
+                    @Override
+                    public void accept(List<Integer> integers) throws Exception {
+                        Log.d(TAG, "accept: " + integers);
+                    }
+                });
+    }
+
+    private void testFilter() {
+        Flowable.just(12, 3, 5, 13, 15, 20, 30, 1, 6)
+                .filter(new Predicate<Integer>() {
+                    @Override
+                    public boolean test(Integer integer) throws Exception {
+                        return integer > 10;
+                    }
+                }).subscribe(new Consumer<Integer>() {
+            @Override
+            public void accept(Integer integer) throws Exception {
+                Log.d(TAG, "accept: " + integer);
+            }
         });
-
-        String XGtoken = XGPushConfig.getToken(this);
     }
 
+    private void testDistinct() {
+        Flowable.just(1, 2, 1, 1, 1, 3, 5, 6, 7, 8)//12,3,5,13,15,20,30,1,6
+                .distinct()
+                .subscribe(new Consumer<Integer>() {
+                    @Override
+                    public void accept(Integer integer) throws Exception {
+                        Log.d(TAG, "accept: " + integer);
+                    }
+                });
+    }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
+    private void testInterval() {
+        Disposable subscribe = Observable.interval(1, TimeUnit.SECONDS)
+                .doOnNext(new Consumer<Long>() {
+                    @Override
+                    public void accept(Long aLong) throws Exception {
+                        Log.d(TAG, "accept: " + aLong);
+                    }
+                }).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Consumer<Long>() {
+                    @Override
+                    public void accept(Long aLong) throws Exception {
+                        Log.d(TAG, "accept222 " + aLong);
+                    }
+                });
+        /*Observable.interval(1,TimeUnit.SECONDS)
+                .subscribe(new Consumer<Long>() {
+                    @Override
+                    public void accept(Long aLong) throws Exception {
+                        Log.d(TAG, "accept: "+aLong);
+                    }
+                });*/
+
 
     }
 
-    @Override
-    protected void onPause() {
-        super.onPause();
+    private void testFlatMap() {
+        AnimalKindBean kBean = new AnimalKindBean("老虎", "东北");
+        Observable.just(kBean)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .doOnNext(new Consumer<AnimalKindBean>() {
+                    @Override
+                    public void accept(AnimalKindBean animalKindBean) throws Exception {
+                        Log.d(TAG, "accept: " + Thread.currentThread().getName());
+                        Log.d(TAG, "accept: " + animalKindBean.getAddr());
+                    }
+                })
+                .observeOn(Schedulers.io())
+                .flatMap(new Function<AnimalKindBean, ObservableSource<String>>() {
+                    @Override
+                    public ObservableSource<String> apply(final AnimalKindBean animalKindBean) throws Exception {
+                        Log.d(TAG, "accept: " + Thread.currentThread().getName());
+                        return Observable.just(animalKindBean.getName());
+                    }
+                }).observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Consumer<String>() {
+                    @Override
+                    public void accept(String s) throws Exception {
+                        Log.d(TAG, "accept: " + Thread.currentThread().getName());
+                        Log.d(TAG, "accept: " + s);
+                    }
+                });
 
+    }
+
+    private void testMap() {
+        Observable.create(new ObservableOnSubscribe<List<AnimalKindBean>>() {
+            @Override
+            public void subscribe(ObservableEmitter<List<AnimalKindBean>> emitter) throws Exception {
+                List<AnimalKindBean> kinds = new ArrayList<>();
+                for (int a = 0; a < 2; a++) {
+                    kinds.add(new AnimalKindBean("黄色" + a, "英国"));
+                }
+                emitter.onNext(kinds);
+            }
+        }).map(new Function<List<AnimalKindBean>, String>() {
+            @Override
+            public String apply(List<AnimalKindBean> animalKindBeans) throws Exception {
+                String s = "";
+                for (AnimalKindBean kBean : animalKindBeans) {
+                    s += kBean.getName();
+                }
+                return s;
+            }
+        }).subscribe(new Consumer<String>() {
+            @Override
+            public void accept(String s) throws Exception {
+                Log.d(TAG, "accept: " + s);
+            }
+        });
+    }
+
+    private void testObservableCreate() {
+        Observable.create(new ObservableOnSubscribe<List<AnimalBean>>() {
+            @Override
+            public void subscribe(ObservableEmitter<List<AnimalBean>> emitter) throws Exception {
+                List<AnimalBean> animals = new ArrayList<>();
+                List<AnimalKindBean> kinds = new ArrayList<>();
+                for (int a = 0; a < 2; a++) {
+                    kinds.add(new AnimalKindBean("黄色" + a, "英国"));
+                }
+                for (int i = 5; i > 0; i--) {
+                    animals.add(new AnimalBean("猫咪", "抓鱼", kinds));
+                }
+                emitter.onNext(animals);
+                emitter.onComplete();
+            }
+        }).subscribe(new Observer<List<AnimalBean>>() {
+            @Override
+            public void onSubscribe(Disposable d) {
+                Log.d(TAG, "onSubscribe()");
+            }
+
+            @Override
+            public void onNext(List<AnimalBean> animalBeans) {
+                Log.d(TAG, "animalBeans:" + animalBeans);
+            }
+
+            @Override
+            public void onError(Throwable e) {
+
+            }
+
+            @Override
+            public void onComplete() {
+                Log.d(TAG, "onComplete()");
+            }
+        });
     }
 
     private void pushMsg() {
-
-        //新建本地通知
-        XGLocalMessage local_msg = new XGLocalMessage();
-        //设置本地消息类型，1:通知，2:消息
-
-        local_msg.setType(1);
-
-        // 设置消息标题
-
-        local_msg.setTitle("qq");
-
-        //设置消息内容
-
-        local_msg.setContent("ww");
-
-        //设置消息日期，格式为：20140502
-
-        local_msg.setDate("20140930");
-
-        //设置消息触发的小时(24小时制)，例如：22代表晚上10点
-
-        local_msg.setHour("19");
-
-        //获取消息触发的分钟，例如：05代表05分
-
-        local_msg.setMin("31");
-
-        //设置消息样式，默认为0或不设置
-
-        local_msg.setBuilderId(0);
-
-        //设置动作类型：1打开activity或app本身，2打开浏览器，3打开Intent ，4通过包名打开应用
-
-        local_msg.setAction_type(1);
-
-        //设置拉起应用页面
-
-        /*local_msg.setActivity("com.example.day_test.SeeActivity");*/
-        // 设置URL
-
-        local_msg.setUrl("http://www.baidu.com");
-
-        // 设置Intent
-
-        local_msg.setIntent("intent:10086#Intent;scheme=tel;action=android.intent.action.DIAL;S.key=value;end");
-
-        // 是否覆盖原先build_id的保存设置。1覆盖，0不覆盖
-
-        local_msg.setStyle_id(1);
-
-        // 设置音频资源
-
-        local_msg.setRing_raw("mm");
-
-        // 设置key,value
-
-        HashMap<String, Object> map = new HashMap<String, Object>();
-
-        map.put("key", "v1");
-
-        map.put("key2", "v2");
-
-        local_msg.setCustomContent(map);
-
-        // 设置下载应用URL
-
-        local_msg.setPackageDownloadUrl("http://softfile.3g.qq.com:8080/msoft/179/1105/10753/MobileQQ1.0(Android)_Build0198.apk");
-
-        //添加通知到本地
-        XGPushManager.addLocalNotification(this,local_msg);
-
+        String XGtoken = XGPushConfig.getToken(this);
     }
 
 

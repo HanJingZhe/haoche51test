@@ -25,11 +25,17 @@
 
     <Button
         android:id="@+id/main_btn"
-        android:text="push"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="48dp"
         android:layout_marginLeft="48dp"
+        android:text="push"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/switchView" />
+
+    <Button
+        android:id="@+id/main_btn_rx"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="RXBUTTON" />
 </android.support.constraint.ConstraintLayout>
