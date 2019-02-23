@@ -36,4 +36,7 @@ dependencies {
 
     //download
     implementation 'com.azhon:appupdate:2.0.0'
+
+    //superTv
+    implementation 'com.github.chenBingX:SuperTextView:v3.1.4'
 }

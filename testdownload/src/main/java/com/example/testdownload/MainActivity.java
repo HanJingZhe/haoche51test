@@ -10,8 +10,6 @@ import android.view.View;
 
 import com.azhon.appupdate.manager.DownloadManager;
 
-import java.io.File;
-
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     private String TAG = "王鹏";
@@ -79,14 +77,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     private void cGetFilesDir() {
         Log.d(TAG, "cGetFilesDir: " + getFilesDir().toString());
-        Log.d(TAG, "cGetFilesDir: "+getCacheDir().toString());
-        Log.d(TAG, "cGetFilesDir: "+getExternalCacheDir().toString());
+        Log.d(TAG, "cGetFilesDir: " + getCacheDir().toString());
+        Log.d(TAG, "cGetFilesDir: " + getExternalCacheDir().toString());
         //Log.d(TAG, "cGetFilesDir: "+getExternalFilesDir().toString());
-        Log.d(TAG, "cGetFilesDir: "+getObbDir().toString());
-        Log.d(TAG, "cGetFilesDir: "+getNoBackupFilesDir().toString());
-        Log.d(TAG, "cGetFilesDir: "+getCodeCacheDir().toString());
-        Log.d(TAG, "cGetFilesDir: "+getPackageCodePath().toString());
-        Log.d(TAG, "cGetFilesDir: "+getPackageResourcePath().toString());
+        Log.d(TAG, "cGetFilesDir: " + getObbDir().toString());
+        Log.d(TAG, "cGetFilesDir: " + getNoBackupFilesDir().toString());
+        Log.d(TAG, "cGetFilesDir: " + getCodeCacheDir().toString());
+        Log.d(TAG, "cGetFilesDir: " + getPackageCodePath().toString());
+        Log.d(TAG, "cGetFilesDir: " + getPackageResourcePath().toString());
 
 
        /* Log.d(TAG, "cGetFilesDir: "+getCacheDir().toString());
@@ -99,9 +97,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Log.d(TAG, "cGetFilesDir: "+getCacheDir().toString());
         Log.d(TAG, "cGetFilesDir: "+getCacheDir().toString());
         Log.d(TAG, "cGetFilesDir: "+getCacheDir().toString());*/
-        Environment.getExternalStorageState() ;//获取存储状态
-        Environment.getDataDirectory() ;//： /data
-        Environment.getDownloadCacheDirectory() ;//： /cache
+        Environment.getExternalStorageState();//获取存储状态
+        Environment.getDataDirectory();//： /data
+        Environment.getDownloadCacheDirectory();//： /cache
         Environment.getRootDirectory();//： /system
         Environment.getExternalStorageDirectory();
 
